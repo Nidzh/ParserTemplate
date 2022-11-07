@@ -1,15 +1,16 @@
 import json
+import os
+import random
 import time
 from pathlib import Path
 
-from fake_useragent import UserAgent
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium import webdriver
-import os
 
 
 class SeleniumBaseClass:
+
 
     def __init__(self, headless=False, browser: str = 'Chrome'):
         self.browser = browser.capitalize()
@@ -46,11 +47,12 @@ class SeleniumBaseClass:
                 self.options = webdriver.ChromeOptions()
                 if headless == True:
                     self.options.add_argument("--headless")
-                self.options.add_argument("--start-maximized")
+                    self.options.add_argument("--no-sandbox")
+                    self.options.add_argument("--disable-gpu")
+                # self.options.add_argument("--start-maximized")
                 self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.options)
 
     # ____________ Navigation ____________
-
     def find_elements_by_class_name(self, value: str):
         return self.driver.find_elements(By.XPATH, f"//*[@class='{value}']")
 
@@ -112,3 +114,7 @@ class SeleniumBaseClass:
                 self.driver.execute_script("window.localStorage.setItem(arguments[0], arguments[1]);", key, value)
         time.sleep(2)
         self.driver.refresh()
+
+    def sleep(self, delay=0):
+        sleep_time = random.random()
+        time.sleep(sleep_time + delay)
