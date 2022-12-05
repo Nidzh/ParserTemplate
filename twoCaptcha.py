@@ -6,7 +6,7 @@ class Two2Captcha:
     def __init__(self):
         self.config = {
             'server': 'rucaptcha.com',
-            'apiKey': '82256c116b6953bd7c59615d9c12ce40',
+            'apiKey': '<KEY>',
             'defaultTimeout': 150,
             'pollingInterval': 10,
         }
